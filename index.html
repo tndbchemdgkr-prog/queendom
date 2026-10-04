@@ -504,9 +504,9 @@
             },
             {
                 title: "기피대상 1호가 날 좋아함",
-                badge: "📌 #BL #청춘로맨스 #짝사랑",
+                badge: "", // 상단 태그 삭제
                 images: ["기피대상.jpg"],
-                desc: "모두가 기피하는 아카데미 내 최고의 트러블 메이커이자 문제아인 상대가 유독 나에게만 집착하기 시작했다. 원작의 평화로운 일상을 지키고 싶을 뿐인데, 자꾸만 엮여 들어가는 아슬아슬하고 설레는 판타지 로맨스."
+                desc: "모두가 기피하는 아카데미 내 최고의 트러블 메이커이자 문제아인 상대가 유독 나에게만 집착하기 시작했다. 원작의 평화로운 일상을 지키고 싶을 뿐인데, 자꾸만 엮여 들어가는 아슬아슬하고 설레는 판타지 로맨스.\n\n#BL #청춘로맨스 #짝사랑" // 설명 칸으로 태그 이동
             },
             {
                 title: "BL 앤솔로지",
@@ -553,41 +553,42 @@
             }
         ];
 
+        // 점수 판정에 따른 직업 확정 로직 (명확한 조건 분기)
         const jobResults = [
             {
-                condition: (m, f, a, c) => a >= 3 && f >= 3,
                 title: "⚔️ 북부 대공가의 전속 수석 마법사",
                 badge: "#능력캐 #음모해체 #핵심인물",
-                desc: "차가운 블리자드가 몰아치는 북부 가문에서 위험한 마탑의 음모를 파헤치는 핵심 브레인!\n뛰어난 마법 실력으로 가문의 절대적인 신임을 얻으며 주인공들의 든든한 조력자로 활약합니다.",
-                strategy: "위험이 닥치면 감정에 휘둘리지 말고 고대 마법 부적으로 방어선을 구축할 것."
+                desc: "차가운 눈폭풍이 몰아치는 북부 가문에서 위험한 마탑의 음모를 파헤치는 핵심 브레인!\n뛰어난 마법 실력으로 가문의 절대적인 신임을 얻으며 주인공들의 든든한 조력자로 활약합니다.",
+                strategy: "위험이 닥치면 감정에 휘둘리지 말고 고대 마법 부적으로 방어선을 구축할 것.",
+                check: (scores) => scores.fantasy >= 3 && scores.active >= 3
             },
             {
-                condition: (m, f, a, c) => c >= 4,
                 title: "☕ 수도 최고급 정보상 및 찻집 주인",
                 badge: "#철저한계획 #은막의실세 #관망주의",
                 desc: "사교계의 모든 비밀과 소문이 모이는 은밀한 티룸의 주인. 사건에 직접 휘말리는 것을 질색하며 귀족들의 약점을 쥐고 배후에서 유유히 이득을 챙기는 처세술 만렙 신분입니다.",
-                strategy: "위기 상황에는 화려한 언변과 철저한 이면 계약서로 상대를 제압하세요."
+                strategy: "위기 상황에는 화려한 언변과 철저한 이면 계약서로 상대를 제압하세요.",
+                check: (scores) => scores.calm >= 4
             },
             {
-                condition: (m, f, a, c) => m >= 3 && a >= 3,
-                title: "🎭 서브 남주를 구원하는 사고뭉치 엑스트라",
+                title: "🎭 구원하는 사고뭉치 조연",
                 badge: "#적극적개입 #서브남주구원 #우당탕탕",
                 desc: "비극적인 운명을 가진 서브 남주나 피폐한 인물을 그냥 지나치지 못하고 냅다 뛰어드는 행동파!\n원작의 흐름을 본의 아니게 박살내며 주변을 온통 시끌벅적하게 만듭니다.",
-                strategy: "직진 본능을 발휘하되, 최소한의 퇴로(비상금과 말)는 항상 확보해 둘 것."
+                strategy: "직진 본능을 발휘하되, 최소한의 퇴로(비상금과 말)는 항상 확보해 둘 것.",
+                check: (scores) => scores.modern >= 3 && scores.active >= 3
             },
             {
-                condition: (m, f, a, c) => f >= 4,
                 title: "📜 신비로운 고대 신전의 수석 예언가",
                 badge: "#운명거스르기 #신비주의 #특수능력",
                 desc: "세계의 숨겨진 예언과 비밀을 꿰뚫어 보는 능력자. 남들이 모르는 미래의 파멸을 미리 알고 있기 때문에 남몰래 식은땀을 흘리며 운명을 비틀기 바쁜 신분입니다.",
-                strategy: "예언이 어긋날 조임이 보이면 능청스러운 거짓말로 위기를 모면하세요."
+                strategy: "예언이 어긋날 조임이 보이면 능청스러운 거짓말로 위기를 모면하세요.",
+                check: (scores) => scores.fantasy >= 4
             },
             {
-                condition: (m, f, a, c) => a >= 4,
                 title: "🎪 아슬아슬한 지하 투기장의 비밀 교관",
                 badge: "#무법지대 #치명적매력 #스트롱캐",
                 desc: "거친 사내들과 괴물들이 바글거리는 지하 세계에서 살아남는 법을 가르치는 전설의 교관.\n권력자들도 함부로 건드리지 못하는 독보적인 무력을 지니고 있습니다.",
-                strategy: "말보다는 주먹이 앞서는 상황에서 냉정하게 판을 읽는 시야를 가질 것."
+                strategy: "말보다는 주먹이 앞서는 상황에서 냉정하게 판을 읽는 시야를 가질 것.",
+                check: (scores) => scores.active >= 4
             }
         ];
 
@@ -653,12 +654,20 @@
             loadingScreen.classList.remove("hide");
 
             setTimeout(() => {
-                let hash = userScores.fantasy * 3 + userScores.active * 2 + userScores.modern + Math.floor(Math.random() * 3);
+                let hash = userScores.fantasy * 3 + userScores.active * 2 + userScores.modern;
                 const selectedNovelIndex = hash % novelResults.length;
                 const chosenNovel = novelResults[selectedNovelIndex];
 
                 document.getElementById("result-title").innerText = chosenNovel.title;
-                document.getElementById("result-badge").innerText = chosenNovel.badge;
+                
+                // 기피대상 1호일 때 상단 태그 칸 숨기기
+                const badgeEl = document.getElementById("result-badge");
+                if (chosenNovel.badge === "") {
+                    badgeEl.classList.add("hide");
+                } else {
+                    badgeEl.classList.remove("hide");
+                    badgeEl.innerText = chosenNovel.badge;
+                }
                 
                 const coverContainer = document.getElementById("cover-container");
                 coverContainer.innerHTML = "";
@@ -693,10 +702,13 @@
                     anthoListBox.innerHTML = "";
                 }
 
+                // 직업 정확한 매칭 판정 로직
                 let matchedJob = defaultJob;
-                let possibleJobs = jobResults.filter(job => job.condition(userScores.modern, userScores.fantasy, userScores.active, userScores.calm));
-                if (possibleJobs.length > 0) {
-                    matchedJob = possibleJobs[Math.floor(Math.random() * possibleJobs.length)];
+                for (let job of jobResults) {
+                    if (job.check(userScores)) {
+                        matchedJob = job;
+                        break;
+                    }
                 }
 
                 document.getElementById("user-job-title").innerText = matchedJob.title;
